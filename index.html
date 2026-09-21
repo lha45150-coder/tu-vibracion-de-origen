@@ -44,7 +44,7 @@ const $=id=>document.getElementById(id),dia=$("dia"),mes=$("mes"),anio=$("anio")
 let current=null,started=false,timer=null,ctx=null,nodes=[];
 function reduce(n){while(n>9)n=String(n).split("").reduce((a,d)=>a+Number(d),0);return n||9}
 function valid(d,m,y){let x=new Date(y,m-1,d);return x.getFullYear()===y&&x.getMonth()===m-1&&x.getDate()===d}
-function vib(d,m,y){let s=(String(d).padStart(2,"0")+String(m).padStart(2,"0")+String(y)).split("").reduce((a,d)=>a+Number(d),0);return reduce(s)}
+function vib(d,m,y){return reduce(d)}
 function stopTone(){nodes.forEach(o=>{try{o.stop()}catch(e){}});nodes=[];if(ctx){try{ctx.close()}catch(e){}}ctx=null}
 function tone(hz){let A=window.AudioContext||window.webkitAudioContext;if(!A)return;ctx=new A();let master=ctx.createGain();master.gain.value=.025;master.connect(ctx.destination);[1,2,3,4,5].forEach((r,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz*r;g.gain.value=[.65,.28,.15,.09,.05][i];o.connect(g).connect(master);o.start();nodes.push(o)})}
 function reset(){clearInterval(timer);timerEl.textContent="15:00"}
