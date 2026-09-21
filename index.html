@@ -31,14 +31,14 @@ button{width:100%;border:0;border-radius:14px;padding:14px 18px;margin-top:18px;
 (function(){
 "use strict";
 const experiencias={
-1:{hz:144,nota:"Do",pieza:"Bach · Preludio n.º 1 en Do mayor, BWV 846",file:"audio/Vibracion_1.mp3"},
-2:{hz:288,nota:"Re",pieza:"Bach · Preludio n.º 3 en Do♯ mayor, BWV 848",file:"audio/Vibracion_2.mp3"},
-3:{hz:432,nota:"Mi",pieza:"Bach · Preludio n.º 7 en Mi♭ mayor, BWV 852",file:"audio/Vibracion_3.mp3"},
-4:{hz:576,nota:"Fa",pieza:"Bach · Preludio n.º 9 en Mi mayor, BWV 854",file:"audio/Vibracion_4.mp3"},
-5:{hz:720,nota:"Sol",pieza:"Bach · Preludio n.º 11 en Fa mayor, BWV 856",file:"audio/Vibracion_5.mp3"},
-6:{hz:864,nota:"La",pieza:"Bach · Preludio n.º 15 en Sol mayor, BWV 860",file:"audio/Vibracion_6.mp3"},
-7:{hz:1008,nota:"Si",pieza:"Bach · Preludio n.º 19 en La mayor, BWV 864",file:"audio/Vibracion_7.mp3"},
-8:{hz:1152,nota:"Do",pieza:"Bach · Preludio n.º 23 en Si mayor, BWV 868",file:"audio/Vibracion_8.mp3"},
+1:{hz:144,nota:"Do",pieza:"Bach · Preludio n.º 1 en Do mayor, BWV 846",file:"audio./Vibracion_1.mp3"},
+2:{hz:288,nota:"Re",pieza:"Bach · Preludio n.º 3 en Do♯ mayor, BWV 848",file:"audio./Vibracion_2.mp3"},
+3:{hz:432,nota:"Mi",pieza:"Bach · Preludio n.º 7 en Mi♭ mayor, BWV 852",file:"audio./Vibracion_3.mp3"},
+4:{hz:576,nota:"Fa",pieza:"Bach · Preludio n.º 9 en Mi mayor, BWV 854",file:"audio./Vibracion_4.mp3"},
+5:{hz:720,nota:"Sol",pieza:"Bach · Preludio n.º 11 en Fa mayor, BWV 856",file:"audio./Vibracion_5.mp3"},
+6:{hz:864,nota:"La",pieza:"Bach · Preludio n.º 15 en Sol mayor, BWV 860",file:"audio./Vibracion_6.mp3"},
+7:{hz:1008,nota:"Si",pieza:"Bach · Preludio n.º 19 en La mayor, BWV 864",file:"audio./Vibracion_7.mp3"},
+8:{hz:1152,nota:"Do",pieza:"Bach · Preludio n.º 23 en Si mayor, BWV 868",file:"audio./Vibracion_8.mp3"},
 9:{hz:1296,nota:"Re",pieza:"Bach · Suite para violonchelo n.º 1, Preludio, BWV 1007",file:"audio/Vibracion_9.mp3"}};
 const $=id=>document.getElementById(id),dia=$("dia"),mes=$("mes"),anio=$("anio"),audio=$("audio"),start=$("start"),status=$("status"),timerEl=$("timer");
 let current=null,started=false,timer=null,ctx=null,nodes=[];
