@@ -51,6 +51,7 @@ function stopTone(){nodes.forEach(o=>{try{o.stop()}catch(e){}});nodes=[];if(ctx)
 function tone(hz){let A=window.AudioContext||window.webkitAudioContext;if(!A)return;ctx=new A();let master=ctx.createGain();master.gain.value=.025;master.connect(ctx.destination);[1,2,3,4,5].forEach((r,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz*r;g.gain.value=[.65,.28,.15,.09,.05][i];o.connect(g).connect(master);o.start();nodes.push(o)})}
 function reset(){clearInterval(timer);timerEl.textContent="15:00"}
 $("calcular").addEventListener("click",async function(){
+  $("result").style.display="none";audio.pause();stopTone();
   let d=Number(dia.value),m=Number(mes.value),y=Number(anio.value);
   let email=document.getElementById("email").value.trim().toLowerCase();
 
