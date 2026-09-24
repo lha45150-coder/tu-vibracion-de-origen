@@ -20,6 +20,8 @@ button{width:100%;border:0;border-radius:14px;padding:14px 18px;margin-top:18px;
 <div class="kicker">Método Charito</div><h1>Tu Vibración de Origen</h1>
 <p class="sub">Introduce tu fecha de nacimiento para descubrir tu vibración y acceder únicamente a tu experiencia sonora personalizada.</p>
 <label for="dia">Fecha de nacimiento</label>
+<label for="email">Email de compra</label>
+<input id="email" type="email" placeholder="Tu email">
 <div class="grid"><input id="dia" type="number" min="1" max="31" placeholder="Día"><input id="mes" type="number" min="1" max="12" placeholder="Mes"><input id="anio" type="number" min="1900" max="2100" placeholder="Año"></div>
 <button id="calcular" type="button">Descubrir mi vibración</button>
 <section id="result" class="result"><div class="kicker">Tu resultado</div><div class="num" id="numero">—</div><div class="freq" id="frecuencia">—</div><div class="piece" id="pieza">—</div>
@@ -48,13 +50,54 @@ function vib(d,m,y){return reduce(d)}
 function stopTone(){nodes.forEach(o=>{try{o.stop()}catch(e){}});nodes=[];if(ctx){try{ctx.close()}catch(e){}}ctx=null}
 function tone(hz){let A=window.AudioContext||window.webkitAudioContext;if(!A)return;ctx=new A();let master=ctx.createGain();master.gain.value=.025;master.connect(ctx.destination);[1,2,3,4,5].forEach((r,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz*r;g.gain.value=[.65,.28,.15,.09,.05][i];o.connect(g).connect(master);o.start();nodes.push(o)})}
 function reset(){clearInterval(timer);timerEl.textContent="15:00"}
-$("calcular").addEventListener("click",function(){
- let d=Number(dia.value),m=Number(mes.value),y=Number(anio.value);
- if(!d||!m||!y||!valid(d,m,y)){alert("Introduce una fecha de nacimiento válida.");return}
- let n=vib(d,m,y);current=experiencias[n];$("numero").textContent=n;$("frecuencia").textContent=current.nota+" · "+current.hz+" Hz";$("pieza").textContent=current.pieza;
- audio.pause();audio.src=current.file;audio.load();stopTone();started=false;reset();start.textContent="Iniciar experiencia sonora · 15 minutos";status.textContent="La experiencia comienza cuando pulses el botón.";$("result").classList.add("show");$("result").scrollIntoView({behavior:"smooth"});
-});
-start.addEventListener("click",async function(){
+$("calcular").addEventListener("click",async function(){
+  let d=Number(dia.value),m=Number(mes.value),y=Number(anio.value);
+  let email=document.getElementById("email").value.trim().toLowerCase();
+
+  if(!email||!email.includes("@")){
+    alert("Introduce el email utilizado en tu compra.");
+    return;
+  }
+
+  if(!d||!m||!y||!valid(d,m,y)){
+    alert("Introduce una fecha de nacimiento válida.");
+    return;
+  }
+
+  try{
+    const respuesta=await fetch("https://cool-fire-c13f.alsabini39.workers.dev/activar",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        email:email,
+        dia:d,
+        mes:m,
+        anio:y
+      })
+    });
+
+    const data=await respuesta.json();
+
+    if(!respuesta.ok||!data.ok){
+      alert(data.error||"No se ha podido activar tu experiencia.");
+      return;
+    }
+
+    let n=data.vibracion;
+    current=experiencias[n];
+
+    $("numero").textContent=n;
+    $("result").style.display="block";
+
+    audio.pause();
+    audio.src=current.file;
+    audio.load();
+    stopTone();
+
+  }catch(error){
+    alert("No se ha podido conectar con el servidor. Inténtalo de nuevo.");
+  }
+});start.addEventListener("click",async function(){
  if(!current)return;
  if(started){audio.pause();stopTone();started=false;clearInterval(timer);start.textContent="Reanudar experiencia sonora";status.textContent="Pausada.";return}
  try{tone(current.hz);if(ctx&&ctx.state==="suspended")await ctx.resume();await audio.play()}catch(e){stopTone();status.textContent="Pulsa de nuevo para iniciar el audio.";return}
