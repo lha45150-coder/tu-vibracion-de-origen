@@ -359,6 +359,7 @@ $("comprar").addEventListener("click",async function(){
       return;
     }
 
+   localStorage.setItem("metodoCharitoFecha",JSON.stringify({dia:d,mes:m,anio:y}));
     window.location.href=data.checkout_url;
 
   }catch(error){
@@ -366,7 +367,16 @@ $("comprar").addEventListener("click",async function(){
   }
 
 });
-$("activar").addEventListener("click",async function(){
+const fechaGuardada=localStorage.getItem("metodoCharitoFecha");
+if(fechaGuardada){
+  try{
+    const fecha=JSON.parse(fechaGuardada);
+    $("dia").value=fecha.dia;
+    $("mes").value=fecha.mes;
+    $("anio").value=fecha.anio;
+  }catch(error){}
+}
+  $("activar").addEventListener("click",async function(){
 
   $("result").style.display="none";
 
