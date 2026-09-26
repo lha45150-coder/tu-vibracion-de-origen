@@ -328,7 +328,7 @@ function tone(hz){
   }catch(e){}
 }
 
-$("comprar").addEventListener("click",function(){
+$("comprar").addEventListener("click",async function(){
 
   const d=Number($("compraDia").value);
   const m=Number($("compraMes").value);
@@ -339,14 +339,33 @@ $("comprar").addEventListener("click",function(){
     return;
   }
 
-  localStorage.setItem(
-    "metodoCharitoFecha",
-    JSON.stringify({dia:d,mes:m,anio:y})
-  );
+  try{
+    const respuesta=await fetch(WORKER+"/preparar",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        dia:d,
+        mes:m,
+        anio:y
+      })
+    });
 
-  window.location.href="https://payhip.com/buy?link=3qBP8";
+    const data=await respuesta.json();
+
+    if(!respuesta.ok||!data.ok){
+      alert(data.error||"No se ha podido preparar tu compra.");
+      return;
+    }
+
+    window.location.href=data.checkout_url;
+
+  }catch(error){
+    alert("No se ha podido conectar con el servidor. Inténtalo de nuevo.");
+  }
+
 });
-
 $("activar").addEventListener("click",async function(){
 
   $("result").style.display="none";
