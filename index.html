@@ -1,74 +1,385 @@
 <!doctype html>
-<html lang="es"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tu Vibración de Origen · Método Charito</title>
+
 <style>
-:root{--bg:#f7f2ea;--card:#fffdf9;--ink:#2e2925;--muted:#756b63;--accent:#8b5e4a;--line:#e6ddd3;--soft:#f0e6dc}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg),#efe5db);font-family:Georgia,"Times New Roman",serif;color:var(--ink);min-height:100vh}
-.wrap{max-width:720px;margin:auto;padding:28px 18px 42px}.card{background:rgba(255,253,249,.97);border:1px solid var(--line);border-radius:24px;padding:28px 22px;box-shadow:0 10px 35px rgba(45,35,28,.08)}
-.kicker{text-align:center;letter-spacing:.14em;text-transform:uppercase;font:600 12px/1.4 system-ui,sans-serif;color:var(--accent)}
-h1{text-align:center;font-size:32px;line-height:1.15;margin:10px 0 8px}.sub{text-align:center;color:var(--muted);font-size:16px;line-height:1.55;margin:0 auto 26px}
-label{display:block;font:600 13px system-ui,sans-serif;margin:15px 0 7px}.grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:10px}
-input{width:100%;border:1px solid #d9cec3;border-radius:12px;background:#fff;padding:12px 13px;font:16px system-ui,sans-serif;color:var(--ink)}
-button{width:100%;border:0;border-radius:14px;padding:14px 18px;margin-top:18px;background:var(--accent);color:white;font:700 16px system-ui,sans-serif}
-.result{display:none;margin-top:24px;padding:22px;border-radius:18px;background:var(--soft);border:1px solid var(--line);text-align:center}.result.show{display:block}
-.num{font-size:54px;line-height:1;margin:4px 0 8px}.freq{font:700 18px system-ui,sans-serif}.piece{font-size:15px;line-height:1.5;margin-top:10px}
-.message{font-size:16px;line-height:1.6;color:var(--muted);margin:14px 0}.audioBox{margin-top:20px}.timer{font:700 28px system-ui,sans-serif;text-align:center;margin:10px 0 14px}
-.status{text-align:center;font:13px system-ui,sans-serif;color:var(--muted);margin-top:8px}audio{width:100%}.note{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font:12px/1.6 system-ui,sans-serif;color:#6d635c;text-align:center}
-@media(max-width:520px){.card{padding:22px 16px}.grid{grid-template-columns:1fr 1fr}.grid input:last-child{grid-column:1/-1}h1{font-size:28px}}
-</style></head><body><div class="wrap"><main class="card">
-<div class="kicker">Método Charito</div><h1>Tu Vibración de Origen</h1>
-<p class="sub">Introduce tu fecha de nacimiento para descubrir tu vibración y acceder únicamente a tu experiencia sonora personalizada.</p>
-<label for="dia">Fecha de nacimiento</label>
-<label for="email">Email de compra</label>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(180deg,#edf5eb,#f7f2ea);
+  font-family:Georgia,"Times New Roman",serif;
+  color:#2e2925
+}
+.wrap{
+  max-width:720px;
+  margin:auto;
+  padding:28px 18px 42px
+}
+.card{
+  background:rgba(255,253,249,.97);
+  border:1px solid #e6ddd3;
+  border-radius:18px;
+  padding:28px 20px;
+  box-shadow:0 8px 30px rgba(70,50,30,.08)
+}
+.kicker{
+  text-align:center;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font:600 12px/1.4 system-ui,sans-serif;
+  color:#8b5e4a
+}
+h1{
+  text-align:center;
+  font-size:32px;
+  line-height:1.15;
+  margin:10px 0 8px
+}
+.sub{
+  text-align:center;
+  color:#756b63;
+  font:15px/1.5 system-ui,sans-serif;
+  margin:0 0 24px
+}
+h2{
+  font-size:21px;
+  margin:24px 0 12px
+}
+label{
+  display:block;
+  font:600 13px system-ui,sans-serif;
+  margin:15px 0 7px
+}
+input{
+  width:100%;
+  border:1px solid #d9cec3;
+  border-radius:12px;
+  background:#fff;
+  padding:12px 13px;
+  font:16px system-ui,sans-serif
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px
+}
+button{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px 18px;
+  margin-top:18px;
+  background:#8b5e4a;
+  color:white;
+  font:700 16px system-ui,sans-serif;
+  cursor:pointer
+}
+button.secondary{
+  background:#5d765e
+}
+button:hover{
+  opacity:.92
+}
+.note{
+  font:13px/1.5 system-ui,sans-serif;
+  color:#756b63;
+  margin-top:12px
+}
+hr{
+  border:0;
+  border-top:1px solid #e6ddd3;
+  margin:28px 0
+}
+.result{
+  display:none;
+  margin-top:24px;
+  padding:22px;
+  border-radius:18px;
+  background:#f0e6dc;
+  text-align:center
+}
+.num{
+  font-size:54px;
+  line-height:1;
+  margin:4px 0 8px
+}
+.freq{
+  font:700 18px system-ui,sans-serif;
+  margin:8px 0
+}
+.piece{
+  font:15px/1.5 system-ui,sans-serif
+}
+.message{
+  font:15px/1.6 system-ui,sans-serif;
+  color:#756b63
+}
+.timer{
+  font:700 28px system-ui,sans-serif;
+  margin:18px 0 8px
+}
+.status{
+  text-align:center;
+  font:13px system-ui,sans-serif;
+  color:#756b63;
+  margin-top:8px
+}
+audio{
+  width:100%;
+  margin-top:18px
+}
+@media(max-width:520px){
+  h1{font-size:27px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<main class="card">
+
+<div class="kicker">Método Charito</div>
+
+<h1>Tu Vibración de Origen</h1>
+
+<p class="sub">
+Descubre tu vibración y accede únicamente a tu experiencia sonora personalizada.
+</p>
+
+<h2>1. Comprar mi experiencia</h2>
+
+<label for="compraDia">Fecha de nacimiento</label>
+
+<div class="grid">
+<input id="compraDia" type="number" min="1" max="31" placeholder="Día">
+<input id="compraMes" type="number" min="1" max="12" placeholder="Mes">
+<input id="compraAnio" type="number" min="1900" max="2100" placeholder="Año">
+</div>
+
+<button id="comprar" type="button">
+Continuar con la compra · 11,99 €
+</button>
+
+<p class="note">
+Introduce aquí la fecha que quedará asociada a tu compra.
+Después serás dirigido a Payhip para completar el pago.
+</p>
+
+<hr>
+
+<h2>2. Ya he comprado</h2>
+
+<label for="email">Email utilizado en la compra</label>
 <input id="email" type="email" placeholder="Tu email">
-<div class="grid"><input id="dia" type="number" min="1" max="31" placeholder="Día"><input id="mes" type="number" min="1" max="12" placeholder="Mes"><input id="anio" type="number" min="1900" max="2100" placeholder="Año"></div>
-<button id="calcular" type="button">Descubrir mi vibración</button>
-<section id="result" class="result"><div class="kicker">Tu resultado</div><div class="num" id="numero">—</div><div class="freq" id="frecuencia">—</div><div class="piece" id="pieza">—</div>
-<p class="message">Esta es tu experiencia sonora personalizada dentro del Método Charito. Busca un lugar tranquilo, ponte cómodo/a y escucha durante 15 minutos.</p>
-<div class="audioBox"><div class="timer" id="timer">15:00</div><audio id="audio" controls preload="metadata"></audio><button id="start" type="button">Iniciar experiencia sonora · 15 minutos</button><div class="status" id="status">La experiencia comienza cuando pulses el botón.</div></div></section>
-<div class="note">Experiencia sonora original de Método Charito · María del Rosario Sánchez</div>
-</main></div>
+
+<label>Fecha de nacimiento</label>
+
+<div class="grid">
+<input id="dia" type="number" min="1" max="31" placeholder="Día">
+<input id="mes" type="number" min="1" max="12" placeholder="Mes">
+<input id="anio" type="number" min="1900" max="2100" placeholder="Año">
+</div>
+
+<button id="activar" class="secondary" type="button">
+Acceder a mi experiencia
+</button>
+
+<section id="result" class="result">
+
+<div class="kicker">Tu resultado</div>
+
+<div class="num" id="numero"></div>
+
+<div class="freq" id="frecuencia"></div>
+
+<div class="piece" id="pieza"></div>
+
+<p class="message">
+Esta es tu experiencia sonora personalizada dentro del Método Charito.
+Busca un lugar tranquilo, ponte cómoda/o y escucha a tu ritmo.
+</p>
+
+<div class="timer" id="timer">15:00</div>
+
+<audio id="audio" controls preload="none"></audio>
+
+<button id="start" type="button">
+Iniciar experiencia sonora · 15 minutos
+</button>
+
+<div id="status" class="status">
+Tu experiencia está preparada.
+</div>
+
+</section>
+
+</main>
+</div>
+
 <script>
-(function(){
-"use strict";
+const WORKER="https://cool-fire-c13f.alsabini39.workers.dev";
+
 const experiencias={
-1:{hz:144,nota:"Do",pieza:"Bach · Preludio n.º 1 en Do mayor, BWV 846",file:"audio./Vibracion_1.mp3"},
-2:{hz:288,nota:"Re",pieza:"Bach · Preludio n.º 3 en Do♯ mayor, BWV 848",file:"audio./Vibracion_2.mp3"},
-3:{hz:432,nota:"Mi",pieza:"Bach · Preludio n.º 7 en Mi♭ mayor, BWV 852",file:"audio./Vibracion_3.mp3"},
-4:{hz:576,nota:"Fa",pieza:"Bach · Preludio n.º 9 en Mi mayor, BWV 854",file:"audio./Vibracion_4.mp3"},
-5:{hz:720,nota:"Sol",pieza:"Bach · Preludio n.º 11 en Fa mayor, BWV 856",file:"audio./Vibracion_5.mp3"},
-6:{hz:864,nota:"La",pieza:"Bach · Preludio n.º 15 en Sol mayor, BWV 860",file:"audio./Vibracion_6.mp3"},
-7:{hz:1008,nota:"Si",pieza:"Bach · Preludio n.º 19 en La mayor, BWV 864",file:"audio./Vibracion_7.mp3"},
-8:{hz:1152,nota:"Do",pieza:"Bach · Preludio n.º 23 en Si mayor, BWV 868",file:"audio./Vibracion_8.mp3"},
-9:{hz:1296,nota:"Re",pieza:"Bach · Suite para violonchelo n.º 1, Preludio, BWV 1007",file:"audio/Vibracion_9.mp3"}};
-const $=id=>document.getElementById(id),dia=$("dia"),mes=$("mes"),anio=$("anio"),audio=$("audio"),start=$("start"),status=$("status"),timerEl=$("timer");
-let current=null,started=false,timer=null,ctx=null,nodes=[];
-function reduce(n){while(n>9)n=String(n).split("").reduce((a,d)=>a+Number(d),0);return n||9}
-function valid(d,m,y){let x=new Date(y,m-1,d);return x.getFullYear()===y&&x.getMonth()===m-1&&x.getDate()===d}
-function vib(d,m,y){return reduce(d)}
-function stopTone(){nodes.forEach(o=>{try{o.stop()}catch(e){}});nodes=[];if(ctx){try{ctx.close()}catch(e){}}ctx=null}
-function tone(hz){let A=window.AudioContext||window.webkitAudioContext;if(!A)return;ctx=new A();let master=ctx.createGain();master.gain.value=.025;master.connect(ctx.destination);[1,2,3,4,5].forEach((r,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.value=hz*r;g.gain.value=[.65,.28,.15,.09,.05][i];o.connect(g).connect(master);o.start();nodes.push(o)})}
-function reset(){clearInterval(timer);timerEl.textContent="15:00"}
-$("calcular").addEventListener("click",async function(){
-  $("result").style.display="none";audio.pause();stopTone();
-  let d=Number(dia.value),m=Number(mes.value),y=Number(anio.value);
-  let email=document.getElementById("email").value.trim().toLowerCase();
+  1:{
+    hz:144,
+    nota:"Do",
+    pieza:"Bach · Preludio n.º 1 en Do mayor, BWV 846",
+    file:"audio./Vibracion_1.mp3"
+  },
+  2:{
+    hz:288,
+    nota:"Re",
+    pieza:"Bach · Preludio n.º 3 en Do♯ mayor, BWV 848",
+    file:"audio./Vibracion_2.mp3"
+  },
+  3:{
+    hz:432,
+    nota:"Mi",
+    pieza:"Bach · Preludio n.º 7 en Mi♭ mayor, BWV 852",
+    file:"audio./Vibracion_3.mp3"
+  },
+  4:{
+    hz:576,
+    nota:"Fa",
+    pieza:"Bach · Preludio n.º 9 en Mi mayor, BWV 854",
+    file:"audio./Vibracion_4.mp3"
+  },
+  5:{
+    hz:720,
+    nota:"Sol",
+    pieza:"Bach · Preludio n.º 11 en Fa mayor, BWV 856",
+    file:"audio./Vibracion_5.mp3"
+  },
+  6:{
+    hz:864,
+    nota:"La",
+    pieza:"Bach · Preludio n.º 15 en Sol mayor, BWV 860",
+    file:"audio./Vibracion_6.mp3"
+  },
+  7:{
+    hz:1008,
+    nota:"Si",
+    pieza:"Bach · Preludio n.º 19 en La mayor, BWV 864",
+    file:"audio./Vibracion_7.mp3"
+  },
+  8:{
+    hz:1152,
+    nota:"Do",
+    pieza:"Bach · Preludio n.º 23 en Si mayor, BWV 868",
+    file:"audio./Vibracion_8.mp3"
+  },
+  9:{
+    hz:1296,
+    nota:"Re",
+    pieza:"Bach · Suite para violonchelo n.º 1, Preludio, BWV 1007",
+    file:"audio./Vibracion_9.mp3"
+  }
+};
+
+const $=id=>document.getElementById(id);
+
+let current=null;
+let started=false;
+let timer=null;
+let ctx=null;
+let oscillator=null;
+
+function valid(d,m,y){
+  if(!d||!m||!y)return false;
+  if(m<1||m>12||d<1||d>31)return false;
+
+  const fecha=new Date(y,m-1,d);
+
+  return fecha.getFullYear()===y &&
+         fecha.getMonth()===m-1 &&
+         fecha.getDate()===d;
+}
+
+function stopTone(){
+  try{
+    if(oscillator){
+      oscillator.stop();
+      oscillator.disconnect();
+    }
+  }catch(e){}
+
+  oscillator=null;
+}
+
+function tone(hz){
+  try{
+    ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+
+    oscillator=ctx.createOscillator();
+    const gain=ctx.createGain();
+
+    oscillator.frequency.value=hz;
+    oscillator.type="sine";
+    gain.gain.value=.025;
+
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+
+    oscillator.start();
+  }catch(e){}
+}
+
+$("comprar").addEventListener("click",function(){
+
+  const d=Number($("compraDia").value);
+  const m=Number($("compraMes").value);
+  const y=Number($("compraAnio").value);
+
+  if(!valid(d,m,y)){
+    alert("Introduce una fecha de nacimiento válida.");
+    return;
+  }
+
+  localStorage.setItem(
+    "metodoCharitoFecha",
+    JSON.stringify({dia:d,mes:m,anio:y})
+  );
+
+  window.location.href="https://payhip.com/buy?link=3qBP8";
+});
+
+$("activar").addEventListener("click",async function(){
+
+  $("result").style.display="none";
+
+  if($("audio").src){
+    $("audio").pause();
+  }
+
+  stopTone();
+
+  const d=Number($("dia").value);
+  const m=Number($("mes").value);
+  const y=Number($("anio").value);
+
+  const email=$("email").value.trim().toLowerCase();
 
   if(!email||!email.includes("@")){
     alert("Introduce el email utilizado en tu compra.");
     return;
   }
 
-  if(!d||!m||!y||!valid(d,m,y)){
+  if(!valid(d,m,y)){
     alert("Introduce una fecha de nacimiento válida.");
     return;
   }
 
   try{
-    const respuesta=await fetch("https://cool-fire-c13f.alsabini39.workers.dev/activar",{
+
+    const respuesta=await fetch(WORKER+"/activar",{
       method:"POST",
-      headers:{"Content-Type":"application/json"},
+      headers:{
+        "Content-Type":"application/json"
+      },
       body:JSON.stringify({
         email:email,
         dia:d,
@@ -84,27 +395,139 @@ $("calcular").addEventListener("click",async function(){
       return;
     }
 
-    let n=data.vibracion;
+    const n=Number(data.vibracion);
+
     current=experiencias[n];
 
-    $("numero").textContent=n;
-    $("result").style.display="block";
+    if(!current){
+      alert("No se encontró la experiencia correspondiente.");
+      return;
+    }
 
-    audio.pause();
-    audio.src=current.file;
-    audio.load();
-    stopTone();
+    $("numero").textContent=n;
+    $("frecuencia").textContent=
+      current.hz+" Hz · Nota "+current.nota;
+
+    $("pieza").textContent=current.pieza;
+
+    $("audio").src=current.file;
+    $("audio").load();
+
+    $("result").style.display="block";
+    $("status").textContent=
+      "Tu experiencia está preparada.";
+
+    window.scrollTo({
+      top:$("result").offsetTop-20,
+      behavior:"smooth"
+    });
 
   }catch(error){
-    alert("No se ha podido conectar con el servidor. Inténtalo de nuevo.");
+
+    alert(
+      "No se ha podido conectar con el servidor. Inténtalo de nuevo."
+    );
   }
-});start.addEventListener("click",async function(){
- if(!current)return;
- if(started){audio.pause();stopTone();started=false;clearInterval(timer);start.textContent="Reanudar experiencia sonora";status.textContent="Pausada.";return}
- try{tone(current.hz);if(ctx&&ctx.state==="suspended")await ctx.resume();await audio.play()}catch(e){stopTone();status.textContent="Pulsa de nuevo para iniciar el audio.";return}
- started=true;start.textContent="Pausar experiencia sonora";status.textContent="Escucha a tu ritmo. El acompañamiento sonoro dura 15 minutos.";
- let t0=performance.now();clearInterval(timer);timer=setInterval(function(){let left=Math.max(0,900-(performance.now()-t0)/1000);let s=Math.ceil(left),mm=String(Math.floor(s/60)).padStart(2,"0"),ss=String(s%60).padStart(2,"0");timerEl.textContent=mm+":"+ss;if(left<=0){clearInterval(timer);audio.pause();stopTone();started=false;start.textContent="Iniciar experiencia sonora · 15 minutos";status.textContent="Experiencia completada."}},250);
 });
-audio.addEventListener("ended",function(){if(started){stopTone();started=false;clearInterval(timer);start.textContent="Iniciar experiencia sonora · 15 minutos";status.textContent="El audio ha terminado."}});
-})();
-</script></body></html>
+
+$("start").addEventListener("click",async function(){
+
+  if(!current)return;
+
+  if(started){
+
+    $("audio").pause();
+    stopTone();
+
+    started=false;
+    $("start").textContent=
+      "Iniciar experiencia sonora · 15 minutos";
+
+    $("status").textContent="Experiencia pausada.";
+
+    return;
+  }
+
+  try{
+
+    tone(current.hz);
+
+    await $("audio").play();
+
+    started=true;
+
+    $("start").textContent="Pausar experiencia sonora";
+
+    $("status").textContent=
+      "Escucha a tu ritmo. El acompañamiento durará 15 minutos.";
+
+    const total=15*60;
+    const inicio=Date.now();
+
+    clearInterval(timer);
+
+    timer=setInterval(function(){
+
+      const transcurrido=
+        Math.floor((Date.now()-inicio)/1000);
+
+      const restante=Math.max(0,total-transcurrido);
+
+      const min=String(Math.floor(restante/60)).padStart(2,"0");
+      const seg=String(restante%60).padStart(2,"0");
+
+      $("timer").textContent=min+":"+seg;
+
+      if(restante<=0){
+
+        clearInterval(timer);
+
+        $("audio").pause();
+        stopTone();
+
+        started=false;
+
+        $("start").textContent=
+          "Iniciar experiencia sonora · 15 minutos";
+
+        $("status").textContent=
+          "Experiencia completada.";
+
+        $("timer").textContent="00:00";
+      }
+
+    },250);
+
+  }catch(e){
+
+    stopTone();
+
+    $("status").textContent=
+      "Pulsa de nuevo para iniciar el audio.";
+  }
+});
+
+$("audio").addEventListener("ended",function(){
+
+  if(started){
+
+    stopTone();
+
+    started=false;
+
+    clearInterval(timer);
+
+    $("start").textContent=
+      "Iniciar experiencia sonora · 15 minutos";
+
+    $("status").textContent=
+      "El audio ha terminado.";
+  }
+
+});
+</script>
+
+</body>
+</html>
+
+</html>
