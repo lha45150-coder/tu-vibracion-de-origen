@@ -434,8 +434,6 @@ if(fechaGuardada){
     }
 
     $("numero").textContent=n;
-    $("frecuencia").textContent=
-      current.hz+" Hz · Nota "+current.nota;
 
     $("pieza").textContent=current.pieza;
 
@@ -479,7 +477,6 @@ $("start").addEventListener("click",async function(){
 
   try{
 
-    tone(current.hz);
 
     await $("audio").play();
 
