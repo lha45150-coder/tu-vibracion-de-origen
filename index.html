@@ -391,12 +391,12 @@ if(fechaGuardada){
   const m=Number($("mes").value);
   const y=Number($("anio").value);
 
-  const email=$("email").value.trim().toLowerCase();
+  const token=sessionStorage.getItem("metodoCharitoToken");
 
-  if(!email||!email.includes("@")){
-    alert("Introduce el email utilizado en tu compra.");
-    return;
-  }
+if(!token){
+  alert("No se ha encontrado la sesión de tu compra.");
+  return;
+}
 
   if(!valid(d,m,y)){
     alert("Introduce una fecha de nacimiento válida.");
@@ -411,7 +411,7 @@ if(fechaGuardada){
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        email:email,
+        token:token,
         dia:d,
         mes:m,
         anio:y
