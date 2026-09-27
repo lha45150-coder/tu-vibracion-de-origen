@@ -359,7 +359,8 @@ $("comprar").addEventListener("click",async function(){
       return;
     }
 
-   localStorage.setItem("metodoCharitoFecha",JSON.stringify({dia:d,mes:m,anio:y}));
+  sessionStorage.setItem("metodoCharitoToken", data.token);
+localStorage.setItem("metodoCharitoFecha", JSON.stringify({dia:d,mes:m,anio:y}));
     window.location.href=data.checkout_url;
 
   }catch(error){
