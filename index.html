@@ -150,6 +150,7 @@ audio{
 Descubre tu vibración y accede únicamente a tu experiencia sonora personalizada.
 </p>
 
+<div id="bloqueCompra">
 <h2>1. Comprar mi experiencia</h2>
 
 <label for="compraDia">Fecha de nacimiento</label>
@@ -170,6 +171,7 @@ Después serás dirigido a Payhip para completar el pago.
 </p>
 
 <hr>
+</div>
 
 <h2>2. Ya he comprado</h2>
 
@@ -358,7 +360,7 @@ $("comprar").addEventListener("click",async function(){
       return;
     }
 
-  sessionStorage.setItem("metodoCharitoToken", data.token);
+  slocalStorage.setItem("metodoCharitoToken", data.token);
 localStorage.setItem("metodoCharitoFecha", JSON.stringify({dia:d,mes:m,anio:y}));
     window.location.href=data.checkout_url;
 
@@ -382,7 +384,7 @@ localStorage.setItem("metodoCharitoFecha", JSON.stringify({dia:d,mes:m,anio:y}))
   const m=Number($("mes").value);
   const y=Number($("anio").value);
 
-  const token=sessionStorage.getItem("metodoCharitoToken");
+  const token=localStorage.getItem("metodoCharitoToken");
 
 if(!token){
   alert("No se ha encontrado la sesión de tu compra.");
