@@ -150,20 +150,42 @@ audio{
 Descubre tu vibración y accede únicamente a tu experiencia sonora personalizada.
 </p>
 
-<div id="accesoCompra">
+<h2>1. Comprar mi experiencia</h2>
 
-<h2>Tu compra está lista.</h2>
+<label for="compraDia">Fecha de nacimiento</label>
+
+<div class="grid">
+<input id="compraDia" type="number" min="1" max="31" placeholder="Día">
+<input id="compraMes" type="number" min="1" max="12" placeholder="Mes">
+<input id="compraAnio" type="number" min="1900" max="2100" placeholder="Año">
+</div>
+
+<button id="comprar" type="button">
+Continuar con la compra
+</button>
 
 <p class="note">
-Fecha de nacimiento:
-<strong id="fechaCompra"></strong>
+Introduce aquí la fecha que quedará asociada a tu compra.
+Después serás dirigido a Payhip para completar el pago.
 </p>
+
+<hr>
+
+<h2>2. Ya he comprado</h2>
+
+
+
+<label>Fecha de nacimiento</label>
+
+<div class="grid">
+<input id="dia" type="number" min="1" max="31" placeholder="Día">
+<input id="mes" type="number" min="1" max="12" placeholder="Mes">
+<input id="anio" type="number" min="1900" max="2100" placeholder="Año">
+</div>
 
 <button id="activar" class="secondary" type="button">
 Acceder a mi experiencia
 </button>
-
-</div>
 
 <section id="result" class="result">
 
@@ -305,64 +327,48 @@ function tone(hz){
   }catch(e){}
 }
 
-const accessToken =
-  new URLSearchParams(window.location.search).get("token");
+$("comprar").addEventListener("click",async function(){
 
-let accessData = null;
+  const d=Number($("compraDia").value);
+  const m=Number($("compraMes").value);
+  const y=Number($("compraAnio").value);
 
-async function prepararAcceso(){
-
-  if(!accessToken){
-
-    $("fechaCompra").textContent =
-      "Revisa el correo que recibiste después de tu compra.";
-
-    $("activar").disabled = true;
-
+  if(!valid(d,m,y)){
+    alert("Introduce una fecha de nacimiento válida.");
     return;
   }
 
   try{
-
-    const respuesta = await fetch(WORKER + "/activar",{
+    const respuesta=await fetch(WORKER+"/preparar",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        token:accessToken
+        dia:d,
+        mes:m,
+        anio:y
       })
     });
 
-    const data = await respuesta.json();
+    const data=await respuesta.json();
 
-    if(!respuesta.ok || !data.ok){
-
-      $("fechaCompra").textContent =
-        "No se ha podido validar tu compra.";
-
-      $("activar").disabled = true;
-
+    if(!respuesta.ok||!data.ok){
+      alert(data.error||"No se ha podido preparar tu compra.");
       return;
     }
 
-    accessData = data;
-
-    $("fechaCompra").textContent =
-      data.fecha_nacimiento;
+  sessionStorage.setItem("metodoCharitoToken", data.token);
+localStorage.setItem("metodoCharitoFecha", JSON.stringify({dia:d,mes:m,anio:y}));
+    window.location.href=data.checkout_url;
 
   }catch(error){
-
-    $("fechaCompra").textContent =
-      "No se ha podido conectar con el servidor.";
-
-    $("activar").disabled = true;
+    alert("No se ha podido conectar con el servidor. Inténtalo de nuevo.");
   }
-}
 
-$("activar").addEventListener("click",async function(){
+});
 
-  if(!accessData)return;
+  $("activar").addEventListener("click",async function(){
 
   $("result").style.display="none";
 
@@ -372,9 +378,45 @@ $("activar").addEventListener("click",async function(){
 
   stopTone();
 
+  const d=Number($("dia").value);
+  const m=Number($("mes").value);
+  const y=Number($("anio").value);
+
+  const token=sessionStorage.getItem("metodoCharitoToken");
+
+if(!token){
+  alert("No se ha encontrado la sesión de tu compra.");
+  return;
+}
+
+  if(!valid(d,m,y)){
+    alert("Introduce una fecha de nacimiento válida.");
+    return;
+  }
+
   try{
 
-    const n=Number(accessData.vibracion);
+    const respuesta=await fetch(WORKER+"/activar",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        token:token,
+        dia:d,
+        mes:m,
+        anio:y
+      })
+    });
+
+    const data=await respuesta.json();
+
+    if(!respuesta.ok||!data.ok){
+      alert(data.error||"No se ha podido activar tu experiencia.");
+      return;
+    }
+
+    const n=Number(data.vibracion);
 
     current=experiencias[n];
 
@@ -391,8 +433,7 @@ $("activar").addEventListener("click",async function(){
     $("audio").load();
 
     $("result").style.display="block";
-
-    $("status").textContent =
+    $("status").textContent=
       "Tu experiencia está preparada.";
 
     window.scrollTo({
@@ -403,12 +444,11 @@ $("activar").addEventListener("click",async function(){
   }catch(error){
 
     alert(
-      "No se ha podido preparar tu experiencia. Inténtalo de nuevo."
+      "No se ha podido conectar con el servidor. Inténtalo de nuevo."
     );
   }
 });
 
-prepararAcceso();
 $("start").addEventListener("click",async function(){
 
   if(!current)return;
