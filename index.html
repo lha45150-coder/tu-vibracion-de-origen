@@ -398,25 +398,25 @@ $("activar").addEventListener("click",async function(){
       return;
     }
 
-    $("#fechaAcceso").textContent =
+    $("fechaAcceso").textContent =
       data.fecha_nacimiento;
 
-    $("#accesoSeccion").style.display="block";
-    $("#comprarSeccion").style.display="none";
+    $("accesoSeccion").style.display="block";
+    $("comprarSeccion").style.display="none";
 
-    $("#numero").textContent =
+    $("numero").textContent =
       data.vibracion;
 
-    $("#pieza").textContent =
+    $("pieza").textContent =
       data.obra;
 
-    $("#audio").src =
+    $("audio").src =
       data.audio;
 
-    $("#result").style.display="block";
+    $("result").style.display="block";
 
     window.scrollTo({
-      top:$("#result").offsetTop-20,
+      top:$("result").offsetTop-20,
       behavior:"smooth"
     });
 
