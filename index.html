@@ -428,12 +428,16 @@ $("activar").addEventListener("click",async function(){
   }
 
 });
-const tokenInicial =
-  new URLSearchParams(window.location.search).get("token");
+window.addEventListener("DOMContentLoaded", function(){
 
-if(tokenInicial){
-  $("#activar").click();
-}
+  const tokenInicial =
+    new URLSearchParams(window.location.search).get("token");
+
+  if(tokenInicial){
+    $("#activar").click();
+  }
+
+});
 $("start").addEventListener("click",async function(){
 
   if(!current)return;
