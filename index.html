@@ -434,7 +434,9 @@ window.addEventListener("DOMContentLoaded", function(){
     new URLSearchParams(window.location.search).get("token");
 
   if(tokenInicial){
-    document.getElementById("activar").click();
+   setTimeout(function(){
+  document.getElementById("activar").click();
+},500);
   }
 
 });
