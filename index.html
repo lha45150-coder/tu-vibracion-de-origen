@@ -370,7 +370,7 @@ $("activar").addEventListener("click",async function(){
     new URLSearchParams(window.location.search).get("token");
 
   if(!token){
-    $("#accesoEstado").textContent =
+    $("accesoEstado").textContent =
       "No se ha encontrado el enlace de acceso.";
     return;
   }
@@ -393,7 +393,7 @@ $("activar").addEventListener("click",async function(){
     const data = await response.json();
 
     if(!response.ok || !data.ok){
-      $("#accesoEstado").textContent =
+      $("accesoEstado").textContent =
         data.error || "No se ha podido activar tu experiencia.";
       return;
     }
@@ -422,7 +422,7 @@ $("activar").addEventListener("click",async function(){
 
   }catch(error){
 
-    $("#accesoEstado").textContent =
+  document.getElementById("accesoEstado").textContent =
       "No se ha podido conectar con el servidor. Inténtalo de nuevo.";
 
   }
